@@ -6,14 +6,12 @@ import FilterContacts from "./FilterContacts/FilterContacts";
 import './App.css'
 
 export class App extends React.Component {
-  constructor() {
-    super()
-    this.state = {
+  state = {
       contacts: [],
       filter: '',
     }
-  }
-  AddContact = (name, number) => {
+
+  addContact = (name, number) => {
     let check = true;
     this.state.contacts.forEach((contact) => {
       if (contact.name === name) {
@@ -27,7 +25,7 @@ export class App extends React.Component {
     // })
 
   }
-  AddFilter = (filter) => {
+  addFilter = (filter) => {
     return this.setState({filter: filter})
   }
   
@@ -41,7 +39,7 @@ export class App extends React.Component {
     return filtredContacts;
   };
   
-  DeleteContact = (id) => {this.setState(prevState => ({
+  deleteContact = (id) => {this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== id),
     }));
 }
@@ -50,11 +48,10 @@ export class App extends React.Component {
   return (
     <div>
       <h1>Phonebook</h1>
-      <InputName addContact={this.AddContact}></InputName>
-  <h2>Contacts</h2>
-        <FilterContacts filter={this.AddFilter}></FilterContacts>
-    <ContactsList contacts={this.filtredContacts()} deleteContact={this.DeleteContact}></ContactsList>
-
+      <InputName addContact={this.addContact}></InputName>
+      <h2>Contacts</h2>
+      <FilterContacts filter={this.addFilter}></FilterContacts>
+      <ContactsList contacts={this.filtredContacts()} deleteContact={this.deleteContact}></ContactsList>
     </div>
     );
     }
