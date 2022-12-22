@@ -1,34 +1,28 @@
-import InputName from "./InputName/InputName";
-import ContactsList from "./ContacstList/ContactsList";
-import { nanoid } from "nanoid";
-import React from "react";
-import FilterContacts from "./FilterContacts/FilterContacts";
-import './App.css'
+import ContactForm from './InputName/InputName';
+import ContactList from './ContacstList/ContactsList';
+import { nanoid } from 'nanoid';
+import React from 'react';
+import Filter from './FilterContacts/FilterContacts';
+import './App.module.css';
 
 export class App extends React.Component {
   state = {
-      contacts: [],
-      filter: '',
-    }
+    contacts: [],
+    filter: '',
+  };
 
   addContact = (name, number) => {
-    let check = true;
-    this.state.contacts.forEach((contact) => {
-      if (contact.name === name) {
-        alert(`${name} is already in contacts!`);
-        check = false
-      }
-    })
-    if(check === true){
-    return this.setState({ contacts: [ ...this.state.contacts, { id:nanoid(), name: name, number: number} ] })
-      }
-    // })
+    return this.setState({
+      contacts: [
+        ...this.state.contacts,
+        { id: nanoid(), name: name, number: number },
+      ],
+    });
+  };
+  addFilter = filter => {
+    return this.setState({ filter: filter });
+  };
 
-  }
-  addFilter = (filter) => {
-    return this.setState({filter: filter})
-  }
-  
   filtredContacts = () => {
     const normalizeFilter = this.state.filter.toLocaleLowerCase();
 
@@ -38,21 +32,28 @@ export class App extends React.Component {
 
     return filtredContacts;
   };
-  
-  deleteContact = (id) => {this.setState(prevState => ({
+
+  deleteContact = id => {
+    this.setState(prevState => ({
       contacts: prevState.contacts.filter(contact => contact.id !== id),
     }));
-}
+  };
 
   render() {
-  return (
-    <div>
-      <h1>Phonebook</h1>
-      <InputName addContact={this.addContact}></InputName>
-      <h2>Contacts</h2>
-      <FilterContacts filter={this.addFilter}></FilterContacts>
-      <ContactsList contacts={this.filtredContacts()} deleteContact={this.deleteContact}></ContactsList>
-    </div>
+    return (
+      <div>
+        <h1>Phonebook</h1>
+        <ContactForm
+          contacts={this.state.contacts}
+          addContact={this.addContact}
+        />
+        <h2>Contacts</h2>
+        <Filter filter={this.addFilter} />
+        <ContactList
+          contacts={this.filtredContacts()}
+          deleteContact={this.deleteContact}
+        ></ContactList>
+      </div>
     );
-    }
-};
+  }
+}
