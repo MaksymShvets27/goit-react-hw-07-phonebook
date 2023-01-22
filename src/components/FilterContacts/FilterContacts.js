@@ -1,6 +1,12 @@
 import css from './FilterContacts.module.css';
-import PropsTypes from 'prop-types';
-const Filter = ({ filter }) => {
+import { useDispatch } from 'react-redux';
+import { setFilter } from 'components/redux/contact.slice';
+const Filter = () => {
+  const dispatch = useDispatch();
+
+  const onFilterChange = filter => {
+    dispatch(setFilter(filter));
+  };
   return (
     <>
       <p>Find contact by Name</p>
@@ -11,13 +17,11 @@ const Filter = ({ filter }) => {
         title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
         required
         onChange={event => {
-          filter(event.target.value);
+          onFilterChange(event.target.value);
         }}
       ></input>
     </>
   );
 };
-Filter.propsTypes = {
-  filter: PropsTypes.func.isRequired,
-};
+
 export default Filter;
