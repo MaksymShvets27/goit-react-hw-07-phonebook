@@ -7,9 +7,10 @@ const ContactList = () => {
 
   return (
     <ul>
-      {filteredContacts.map(contact => {
-        return <ContactsListItem key={contact.id} contact={contact} />;
-      })}
+      {filteredContacts &&
+        filteredContacts.map(contact => {
+          return <ContactsListItem key={contact.id} contact={contact} />;
+        })}
     </ul>
   );
 };

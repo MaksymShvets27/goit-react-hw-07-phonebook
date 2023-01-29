@@ -1,18 +1,18 @@
 import css from './ContactsListItem.module.css';
 import PropsTypes from 'prop-types';
 import { useDispatch } from 'react-redux';
-import { deleteContact } from 'redux/contact.slice';
+import { deleteContactAsyncThunk } from 'redux/contacts.thunk';
 
 const ContactsListItem = ({ contact }) => {
   const dispatch = useDispatch();
 
   const onDeleteContact = id => {
-    dispatch(deleteContact(id));
+    dispatch(deleteContactAsyncThunk(id));
   };
 
   return (
     <li>
-      {contact.name}: {contact.number}
+      {contact.name}: {contact.phone}
       <button
         className={css.deleteButton}
         type="button"

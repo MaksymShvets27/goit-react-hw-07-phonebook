@@ -2,10 +2,10 @@ import css from './InputName.module.css';
 import { useState } from 'react';
 import { nanoid } from '@reduxjs/toolkit';
 import { useDispatch, useSelector } from 'react-redux';
-import { addContact } from '../../redux/contact.slice';
+import { addContactAsyncThunk } from 'redux/contacts.thunk';
 
 const ContactForm = () => {
-  const contacts = useSelector(state => state.contacts.contacts);
+  const contacts = useSelector(state => state.contacts.contacts.items);
   const dispatch = useDispatch();
 
   const [currentContactName, setCurrentContactName] = useState('');
@@ -17,7 +17,7 @@ const ContactForm = () => {
     const newContact = {
       id: nanoid(),
       name: currentContactName,
-      number: currentContactNumber,
+      phone: currentContactNumber,
     };
 
     if (currentContactName && currentContactNumber) {
@@ -28,7 +28,7 @@ const ContactForm = () => {
         }
       });
       if (check === true) {
-        dispatch(addContact(newContact));
+        dispatch(addContactAsyncThunk(newContact));
         setCurrentContactName('');
         setCurrentContactNumber('');
       }
